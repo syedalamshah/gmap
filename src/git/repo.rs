@@ -324,7 +324,7 @@ impl GitRepo {
         Ok((is_binary, lines, obj))
     }
 
-    fn find_commit_with_context<'a>(&'a self, id: ObjectId, from_commit: Option<&str>) -> Result<gix::object::Commit<'a>> {
+    fn find_commit_with_context<'a>(&'a self, id: ObjectId, from_commit: Option<&str>) -> Result<gix::Commit<'a>> {
         self.repo.find_commit(id).map_err(|e| {
             if let Some(from) = from_commit {
                 GmapError::Other(format!("Object find error: {} (referenced from commit {})", e, from))
