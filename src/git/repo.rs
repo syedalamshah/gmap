@@ -330,7 +330,7 @@ impl GitRepo {
         Ok((is_binary, lines, obj))
     }
 
-    fn find_commit_with_context<'a>(&'a self, id: ObjectId, from_commit: Option<&str>) -> Result<gix::object::Commit<'a>> {
+    fn find_commit_with_context<'a>(&'a self, id: ObjectId, from_commit: Option<&str>) -> Result<gix::Commit<'a>> {
         self.repo.find_commit(id).map_err(|e| {
             if let Some(from) = from_commit {
                 GmapError::Other(format!("Object find error: {} (referenced from commit {})", e, from))
@@ -450,10 +450,6 @@ impl GitRepo {
     }
 
     /// Compute commit stats for a single commit by ID, using first parent when present.
-
-    pub fn compute_commit_stats_for(&self, commit_id: ObjectId, binary: bool) -> Result<CommitStats> {
-        let commit = self.find_commit_with_context(commit_id, None)?;
-=======
     pub fn compute_commit_stats_for(
         &self,
         commit_id: ObjectId,
